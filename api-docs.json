@@ -1,0 +1,27 @@
+{"openapi":"3.0.1",
+  "info":{"title":"OpenAPI definition",
+    "version":"v0"},
+  "servers":[{"url":"http://localhost:8080","description":"Generated server url"}],
+  "paths":{"/api/notes/{id}":{"put":{"tags":["note-controller"],
+    "operationId":"editNote",
+    "parameters":[
+      {"name":"id",
+        "in":"path",
+        "required":true,
+        "schema":
+        {
+          "type":"integer",
+          "format":"int64"
+        }
+      }
+    ],
+    "requestBody":{
+      "content": {"application/json":{"schema":{"$ref":"#/components/schemas/Note"}}},
+      "required":true},
+    "responses":{
+      "200":{
+        "description":"OK",
+        "content":{"*/*":{"schema":{"$ref":"#/components/schemas/Note"}}}
+      }
+    }
+  },"delete":{"tags":["note-controller"],"operationId":"deleteNote","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK"}}}},"/api/notes":{"get":{"tags":["note-controller"],"operationId":"getNotes","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Note"}}}}}}},"post":{"tags":["note-controller"],"operationId":"addNote","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/Note"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/Note"}}}}}}},"/api/auth/register":{"post":{"tags":["auth-controller"],"operationId":"register","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/User"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/UserDomain"}}}}}}},"/api/auth/login":{"post":{"tags":["auth-controller"],"operationId":"login","requestBody":{"content":{"application/json":{"schema":{"type":"object","additionalProperties":{"type":"string"}}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object","additionalProperties":{"type":"string"}}}}}}}},"/api/public/hello":{"get":{"tags":["test-controller"],"operationId":"publicHello","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}}},"/api/private/hello":{"get":{"tags":["test-controller"],"operationId":"privateHello","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"Note":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"title":{"type":"string"},"description":{"type":"string"},"addingDate":{"type":"string","format":"date-time"},"editingDate":{"type":"string","format":"date-time"},"deadline":{"type":"string","format":"date-time"},"user":{"$ref":"#/components/schemas/User"}}},"User":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"email":{"type":"string"},"username":{"type":"string"},"password":{"type":"string"}}},"UserDomain":{"type":"object","properties":{"name":{"type":"string"},"username":{"type":"string"},"email":{"type":"string"}}}}}}

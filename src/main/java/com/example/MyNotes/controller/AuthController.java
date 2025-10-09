@@ -1,9 +1,11 @@
 package com.example.MyNotes.controller;
 
+import com.example.MyNotes.domain.UserDomain;
 import com.example.MyNotes.entity.User;
 import com.example.MyNotes.security.JwtUtil;
 import com.example.MyNotes.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -21,8 +23,9 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    public ResponseEntity<UserDomain> register(@RequestBody User user) {
+        UserDomain response = userService.register(user);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
