@@ -22,22 +22,36 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDomain> register(@RequestBody User user) {
-        UserDomain response = userService.register(user);
-        return ResponseEntity.ok(response);
+    @PostMapping("/register/{username}/{password}")
+    public ResponseEntity<UserDomain> register(
+            @PathVariable String name,
+            @PathVariable String email,
+            @PathVariable String username,
+            @PathVariable String password) {
+
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPassword(password);
+
+        return ResponseEntity.ok(userService.register(user));
     }
 
-    @PostMapping("/login")
-    public Map<String, String> login(@RequestBody Map<String, String> loginRequest) {
+
+    @PostMapping("/login/{username}/{password}")
+    public Map<String, String> login(
+            @PathVariable String username,
+            @PathVariable String password) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.get("username"), loginRequest.get("password"))
+                    new UsernamePasswordAuthenticationToken(username, password)
             );
-            String token = jwtUtil.generateToken(loginRequest.get("username"));
+            String token = jwtUtil.generateToken(username);
             return Map.of("token", token);
         } catch (AuthenticationException e) {
             return Map.of("error", "Invalid username or password");
         }
     }
+
 }
