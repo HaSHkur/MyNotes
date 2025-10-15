@@ -2,15 +2,16 @@ package com.example.MyNotes.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET_KEY = "thisisaverysecretkeyforjwt1234567890"; // 32+ chars
     private static final long EXPIRATION = 1000 * 60 * 60; // 1 hour
-
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
     private Key key() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
