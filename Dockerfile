@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy Gradle wrapper & config files first for caching
 COPY gradlew .
 COPY gradle gradle
-COPY build.gradle settings.gradle gradle.properties ./
+COPY build.gradle settings.gradle ./
 
 # Make wrapper executable
 RUN chmod +x ./gradlew
